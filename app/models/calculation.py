@@ -11,7 +11,7 @@ It demonstrates several advanced patterns:
 4. Single Responsibility Principle - Each calculation type does one thing
 
 These models are designed for a calculator application that supports
-basic mathematical operations: addition, subtraction, multiplication, and division.
+basic mathematical operations: addition, subtraction, multiplication,division, and exponentiation.
 """
 
 from datetime import datetime
@@ -178,6 +178,7 @@ class AbstractCalculation:
             'subtraction': Subtraction,
             'multiplication': Multiplication,
             'division': Division,
+            'exponentiation': Exponentiation,
         }
         calculation_class = calculation_classes.get(calculation_type.lower())
         if not calculation_class:
@@ -315,6 +316,39 @@ class Multiplication(Calculation):
         for value in self.inputs:
             result *= value
         return result
+
+class Exponentiation(Calculation):
+    """
+    Exponentiation calculation subclass.
+    
+    Implements exponentiation (power) of multiple numbers sequentially.
+    Examples:
+        [2, 3] -> 2 ** 3 = 8
+        [2, 3, 2] -> (2 ** 3) ** 2 = 64
+    """
+    __mapper_args__ = {"polymorphic_identity": "Exponentiation"}
+
+    def get_result(self) -> float:
+        """
+        Calculate the power of the input values.
+        
+        Returns:
+            float: The result of sequential exponentiation
+            
+        Raises:
+            ValueError: If inputs are not a list or if fewer than 2 numbers provided
+        """
+        if not isinstance(self.inputs, list):
+            raise ValueError("Inputs must be a list of numbers.")
+        if len(self.inputs) < 2:
+            raise ValueError("Inputs must be a list with at least two numbers.")
+        
+        # Start with the first number as the base
+        result = self.inputs[0]
+        # Sequentially apply each subsequent number as the Exponentiation
+        for value in self.inputs[1:]:
+            result **= value
+        return float(result)
 
 class Division(Calculation):
     """

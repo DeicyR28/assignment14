@@ -132,7 +132,7 @@ Let's write some unit tests for our calculation models:
 ```python
 # tests/unit/test_calculator.py
 import pytest
-from app.models.calculation import Addition, Subtraction, Multiplication, Division
+from app.models.calculation import Addition, Subtraction, Multiplication, Division, Exponentiation
 
 def test_addition():
     """Test addition calculation."""
@@ -157,6 +157,14 @@ def test_multiplication():
     
     # Test that it calculates the correct result
     assert multiplication.get_result() == 24
+
+def test_exponentiation():
+    """Test exponentiation calculation."""
+    # Create a exponentiation calculation
+    exponentiation = Exponentiation(inputs=[2, 2, 2])
+    
+    # Test that it calculates the correct result
+    assert exponentiation.get_result() == 8
 
 def test_division():
     """Test division calculation."""
@@ -618,7 +626,7 @@ def test_calculations(db_session, test_user):
     calculations = []
     
     # Create one of each calculation type
-    calc_types = ["addition", "subtraction", "multiplication", "division"]
+    calc_types = ["addition", "subtraction", "multiplication", "division", "exponentiation"]
     for calc_type in calc_types:
         calc = Calculation.create(
             calculation_type=calc_type,

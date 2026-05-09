@@ -187,6 +187,7 @@ class AbstractCalculation:
             'subtraction': Subtraction,
             'multiplication': Multiplication,
             'division': Division,
+            'exponentiation': Exponentiation,
         }
         calculation_class = calculation_classes.get(calculation_type.lower())
         if not calculation_class:
@@ -242,6 +243,23 @@ class Multiplication(Calculation):
         for value in self.inputs:
             result *= value
         return result
+
+class Exponentiation(Calculation):
+    """Exponentiation calculation"""
+    __mapper_args__ = {"polymorphic_identity": "Exponentiation"}
+
+    def get_result(self) -> float:
+        if not isinstance(self.inputs, list):
+            raise ValueError("Inputs must be a list of numbers.")
+        if len(self.inputs) < 2:
+            raise ValueError("Inputs must be a list with at least two numbers.")
+        
+        # Start with the first number as the base
+        result = self.inputs[0]
+        # Sequentially apply each subsequent number as the Exponentiation
+        for value in self.inputs[1:]:
+            result **= value
+        return float(result)
 
 class Division(Calculation):
     """Division calculation"""

@@ -86,6 +86,27 @@ def multiply(a: Number, b: Number) -> Number:
     result = a * b
     return result
 
+def Exponentiation(a: Number, b: Number) -> Number:
+    """
+    Raise the base to the power of the exponent and return the result.
+
+    Parameters:
+    - a (int or float): The base number.
+    - b (int or float): The exponent.
+
+    Returns:
+    - int or float: The result of a raised to the power of b.
+
+    Example:
+    >>> Exponentiation(2, 3)
+    8
+    >>> Exponentiation(9, 0.5)
+    3.0
+    """
+    # Perform exponentiation of a to the power of b
+    result = a ** b
+    return result
+
 def divide(a: Number, b: Number) -> float:
     """
     Divide the first number by the second and return the quotient.
